@@ -2,9 +2,9 @@
 
 ## Documento de Arquitetura de Software v1.0
 
-**Empresa:** [Nome da Empresa de Pesquisa Agropecuária]
-**Data:** Julho/2026
-**Responsável Técnico:** [Nome do Melhorista Responsável]
+**Empresa:** Empresa de Pesquisa Agropecuária e Extensão Rural de Santa Catarina (**Epagri**)<br>
+**Data:** Julho/2026<br>
+**Responsável Técnico:** Tiago Camponogara Tomazetti
 
 ---
 
@@ -669,6 +669,6 @@ def validar_compatibilidade_cruzamento(genotipo_mae, genotipo_pai):
 
 | Versão | Data | Autor | Alterações |
 |--------|------|-------|------------|
-| 1.0 | Jul/2026 | [Nome] | Versão inicial completa |
+| 1.0 | Jul/2026 | Tiago Camponogara Tomazetti | Versão inicial completa (MVP)|
 
-```
+---

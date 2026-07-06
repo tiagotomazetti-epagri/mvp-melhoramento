@@ -180,6 +180,31 @@ Destaques para a próxima versão:
 
 Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
 
+## 📞 Suporte
+
+### Canais de Atendimento
+
+- **Email:** tiagotomazetti@epagri.sc.gov.br
+- **Issues:** [GitHub Issues](https://github.com/tiagotomazetti-epagri/mvp-melhoramento/issues)
+- **Wiki:** [Wiki do Projeto](https://github.com/tiagotomazetti-epagri/mvp-melhoramento/wiki)
+- **Plantão:** 
+    - Ramal: 010 16846
+    - Núm. Externo: (49)35616846
+
+### Equipe
+
+| Nome | Papel | Contato |
+|------|-------|---------|
+| Tiago Camponogara Tomazetti | Melhorista e Desenvolvedor | tiagotomazetti@epagri.sc.gov.br |
+| Marcus Vinicius Kvitschal | Melhorista | marcusvinicius@epagri.sc.gov.br |
+| Liane Bahr Thurow | Melhorista | lianethurow@epagri.sc.gov.br |
+
+---
+
+**Última atualização:** Julho 2026
+
+---
+
 ---
 *Desenvolvido com ❤️ pela equipe do Programa de Melhoramento Genético da macieira* - **Epagri**
 
