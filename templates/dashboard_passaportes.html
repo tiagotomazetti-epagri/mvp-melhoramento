@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programa de Melhoramento Genético - Macieira</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f5f5f5; color: #333; }
+        header { background: #2c3e50; color: white; padding: 20px; text-align: center; }
+        header h1 { font-size: 24px; }
+        header p { font-size: 14px; opacity: 0.8; margin-top: 5px; }
+        .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
+        .secao { margin-bottom: 40px; }
+        .secao h2 { border-bottom: 3px solid #4CAF50; padding-bottom: 10px; margin-bottom: 20px; color: #2c3e50; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        .card { background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; transition: transform 0.2s; }
+        .card:hover { transform: translateY(-3px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .card img { width: 100%; height: 180px; object-fit: cover; background: #e0e0e0; }
+        .card-body { padding: 15px; }
+        .card-body h3 { color: #2c3e50; margin-bottom: 8px; font-size: 18px; }
+        .card-body .tipo { display: inline-block; background: #4CAF50; color: white; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: bold; margin-bottom: 10px; }
+        .card-body .info { font-size: 13px; color: #666; margin-bottom: 5px; }
+        .card-body .info strong { color: #333; }
+        .sem-dados { text-align: center; color: #999; padding: 30px; font-style: italic; }
+        footer { text-align: center; padding: 20px; color: #999; font-size: 12px; }
+        .badge-status { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; margin-left: 5px; }
+        .badge-ativo { background: #d4edda; color: #155724; }
+        .contador { background: #4CAF50; color: white; padding: 2px 8px; border-radius: 10px; font-size: 12px; margin-left: 5px; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🍎 Programa de Melhoramento Genético da Macieira</h1>
+        <p>Epagri - Empresa de Pesquisa Agropecuária e Extensão Rural de Santa Catarina</p>
+    </header>
+
+    <div class="container">
+        
+        <!-- Seleções -->
+        <div class="secao">
+            <h2>⭐ Seleções <span class="contador">{{ selecoes|length }}</span></h2>
+            {% if selecoes %}
+            <div class="grid">
+                {% for genotipo in selecoes %}
+                <div class="card">
+                    {% if genotipo.foto_planta %}
+                    <img src="{{ genotipo.foto_planta.url }}" alt="{{ genotipo.nome_designacao }}">
+                    {% elif genotipo.foto_fruto %}
+                    <img src="{{ genotipo.foto_fruto.url }}" alt="{{ genotipo.nome_designacao }}">
+                    {% else %}
+                    <div style="height: 180px; background: #e0e0e0; display: flex; align-items: center; justify-content: center; color: #999;">Sem foto</div>
+                    {% endif %}
+                    <div class="card-body">
+                        <span class="tipo">{{ genotipo.get_tipo_display }}</span>
+                        <h3>{{ genotipo.nome_designacao }}</h3>
+                        <p class="info"><strong>ID:</strong> {{ genotipo.identificador_unico }}</p>
+                        <p class="info"><strong>Alelos S:</strong> {{ genotipo.alelos_s_display }}</p>
+                        {% if genotipo.genitor_feminino or genotipo.genitor_masculino %}
+                        <p class="info">
+                            <strong>Genealogia:</strong> 
+                            {{ genotipo.genitor_feminino.nome_designacao|default:"?" }} × 
+                            {{ genotipo.genitor_masculino.nome_designacao|default:"?" }}
+                        </p>
+                        {% endif %}
+                        <p class="info"><strong>Origem:</strong> {{ genotipo.get_origem_display }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="sem-dados">Nenhuma seleção com passaporte público no momento.</p>
+            {% endif %}
+        </div>
+
+        <!-- Cultivares -->
+        <div class="secao">
+            <h2>🏆 Cultivares Lançadas <span class="contador">{{ cultivares|length }}</span></h2>
+            {% if cultivares %}
+            <div class="grid">
+                {% for genotipo in cultivares %}
+                <div class="card">
+                    {% if genotipo.foto_fruto %}
+                    <img src="{{ genotipo.foto_fruto.url }}" alt="{{ genotipo.nome_designacao }}">
+                    {% elif genotipo.foto_planta %}
+                    <img src="{{ genotipo.foto_planta.url }}" alt="{{ genotipo.nome_designacao }}">
+                    {% else %}
+                    <div style="height: 180px; background: #e0e0e0; display: flex; align-items: center; justify-content: center; color: #999;">Sem foto</div>
+                    {% endif %}
+                    <div class="card-body">
+                        <span class="tipo" style="background: #FF9800;">{{ genotipo.get_tipo_display }}</span>
+                        <h3>{{ genotipo.nome_designacao }}</h3>
+                        <p class="info"><strong>ID:</strong> {{ genotipo.identificador_unico }}</p>
+                        <p class="info"><strong>Alelos S:</strong> {{ genotipo.alelos_s_display }}</p>
+                        {% if genotipo.genitor_feminino or genotipo.genitor_masculino %}
+                        <p class="info">
+                            <strong>Genealogia:</strong> 
+                            {{ genotipo.genitor_feminino.nome_designacao|default:"?" }} × 
+                            {{ genotipo.genitor_masculino.nome_designacao|default:"?" }}
+                        </p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="sem-dados">Nenhuma cultivar com passaporte público no momento.</p>
+            {% endif %}
+        </div>
+
+        <!-- Mutantes -->
+        <div class="secao">
+            <h2>🧬 Mutantes <span class="contador">{{ mutantes|length }}</span></h2>
+            {% if mutantes %}
+            <div class="grid">
+                {% for genotipo in mutantes %}
+                <div class="card">
+                    {% if genotipo.foto_planta %}
+                    <img src="{{ genotipo.foto_planta.url }}" alt="{{ genotipo.nome_designacao }}">
+                    {% elif genotipo.foto_fruto %}
+                    <img src="{{ genotipo.foto_fruto.url }}" alt="{{ genotipo.nome_designacao }}">
+                    {% else %}
+                    <div style="height: 180px; background: #e0e0e0; display: flex; align-items: center; justify-content: center; color: #999;">Sem foto</div>
+                    {% endif %}
+                    <div class="card-body">
+                        <span class="tipo" style="background: #9C27B0;">{{ genotipo.get_tipo_display }}</span>
+                        <h3>{{ genotipo.nome_designacao }}</h3>
+                        <p class="info"><strong>ID:</strong> {{ genotipo.identificador_unico }}</p>
+                        <p class="info"><strong>Alelos S:</strong> {{ genotipo.alelos_s_display }}</p>
+                        {% if genotipo.genotipo_original %}
+                        <p class="info"><strong>Material Original:</strong> {{ genotipo.genotipo_original.nome_designacao }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="sem-dados">Nenhum mutante com passaporte público no momento.</p>
+            {% endif %}
+        </div>
+
+    </div>
+
+    <footer>
+        © {{ year }} Epagri - Todos os direitos reservados | Acesso restrito: <a href="/admin">Área Administrativa</a>
+    </footer>
+</body>
+</html>

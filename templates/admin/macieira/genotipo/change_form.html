@@ -1,0 +1,11 @@
+{% extends "admin/change_form.html" %}
+
+{% block object-tools-items %}
+    {{ block.super }}
+    <li>
+        <a href="{% url 'admin:macieira_genotipo_registrar_mutante' object_id %}" 
+           style="background-color: #4CAF50; color: white; padding: 6px 12px; border-radius: 4px;">
+            🧬 Registrar Mutante
+        </a>
+    </li>
+{% endblock %}
