@@ -37,6 +37,41 @@
 
     <div class="container">
         
+        <!-- Pré-Seleções -->
+        <div class="secao">
+            <h2>🌱 Pré-Seleções <span class="contador">{{ pre_selecoes|length }}</span></h2>
+            {% if pre_selecoes %}
+            <div class="grid">
+                {% for genotipo in pre_selecoes %}
+                <div class="card">
+                    {% if genotipo.foto_fruto %}
+                    <img src="{{ genotipo.foto_fruto.url }}" alt="{{ genotipo.nome_designacao }}">
+                    {% elif genotipo.foto_planta %}
+                    <img src="{{ genotipo.foto_planta.url }}" alt="{{ genotipo.nome_designacao }}">
+                    {% else %}
+                    <div style="height: 180px; background: #e0e0e0; display: flex; align-items: center; justify-content: center; color: #999;">Sem foto</div>
+                    {% endif %}
+                    <div class="card-body">
+                        <span class="tipo" style="background: #2196F3;">{{ genotipo.get_tipo_display }}</span>
+                        <h3>{{ genotipo.nome_designacao }}</h3>
+                        <p class="info"><strong>ID:</strong> {{ genotipo.identificador_unico }}</p>
+                        <p class="info"><strong>Alelos S:</strong> {{ genotipo.alelos_s_display }}</p>
+                        {% if genotipo.genitor_feminino or genotipo.genitor_masculino %}
+                        <p class="info">
+                            <strong>Genealogia:</strong> 
+                            {{ genotipo.genitor_feminino.nome_designacao|default:"?" }} × 
+                            {{ genotipo.genitor_masculino.nome_designacao|default:"Polinização Livre" }}
+                        </p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="sem-dados">Nenhuma pré-seleção com passaporte público no momento.</p>
+            {% endif %}
+        </div>
+
         <!-- Seleções -->
         <div class="secao">
             <h2>⭐ Seleções <span class="contador">{{ selecoes|length }}</span></h2>
@@ -60,7 +95,7 @@
                         <p class="info">
                             <strong>Genealogia:</strong> 
                             {{ genotipo.genitor_feminino.nome_designacao|default:"?" }} × 
-                            {{ genotipo.genitor_masculino.nome_designacao|default:"?" }}
+                            {{ genotipo.genitor_masculino.nome_designacao|default:"Polinização Livre" }}
                         </p>
                         {% endif %}
                         <p class="info"><strong>Origem:</strong> {{ genotipo.get_origem_display }}</p>
@@ -96,7 +131,7 @@
                         <p class="info">
                             <strong>Genealogia:</strong> 
                             {{ genotipo.genitor_feminino.nome_designacao|default:"?" }} × 
-                            {{ genotipo.genitor_masculino.nome_designacao|default:"?" }}
+                            {{ genotipo.genitor_masculino.nome_designacao|default:"Polinização Livre" }}
                         </p>
                         {% endif %}
                     </div>
