@@ -9,7 +9,7 @@ User = get_user_model()
 
 username = os.getenv('DJANGO_SUPERUSER_USERNAME', 'admin')
 email = os.getenv('DJANGO_SUPERUSER_EMAIL', 'admin@exemplo.com')
-password = os.getenv('DJANGO_SUPERUSER_PASSWORD')
+password = os.getenv('DJANGO_SUPERUSER_PASSWORD', '1234')
 
 if not password:
     print("DJANGO_SUPERUSER_PASSWORD não configurada. Pulando criação de superusuário.")

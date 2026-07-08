@@ -213,6 +213,7 @@ tempCodeRunnerFile.py
 
 # Media
 media/
+staticfiles/
 
 # Marimo
 marimo/_static/

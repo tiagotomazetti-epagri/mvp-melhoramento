@@ -11,7 +11,7 @@ from .models import Genotipo, Ambiente, Cruzamento, Plantio, AvaliacaoFenotipica
 @admin.register(Genotipo)
 class GenotipoAdmin(SimpleHistoryAdmin):
     list_display = [
-        'identificador_unico',
+        # 'identificador_unico',
         'nome_designacao',
         'tipo',
         'origem',
@@ -19,9 +19,14 @@ class GenotipoAdmin(SimpleHistoryAdmin):
         'alelos_s_display'
     ]
     list_filter = ['tipo', 'origem', 'status']
-    search_fields = ['identificador_unico', 'nome_designacao', 'codigo_pre_selecao', 'codigo_selecao']
+    search_fields = [
+        # 'identificador_unico',
+        'nome_designacao',
+        'codigo_pre_selecao',
+        'codigo_selecao'
+    ]
     readonly_fields = [
-        "identificador_unico", 
+        # "identificador_unico", 
         "genealogia_display", 
         "codigo_pre_selecao", 
         "codigo_selecao", 
@@ -31,7 +36,7 @@ class GenotipoAdmin(SimpleHistoryAdmin):
     fieldsets = (
         ('Identificação', {
             'fields': (
-                'identificador_unico',
+                # 'identificador_unico',
                 'nome_designacao',
                 'tipo',
                 'origem',
@@ -41,6 +46,7 @@ class GenotipoAdmin(SimpleHistoryAdmin):
         }),
         ('Rastreabilidade Técnica', {
             'fields': (
+                'cruzamento_origem',
                 'codigo_pre_selecao',
                 'codigo_selecao',
                 'ano_selecao'
@@ -52,7 +58,6 @@ class GenotipoAdmin(SimpleHistoryAdmin):
                 'genitor_feminino',
                 'genitor_masculino',
                 'genotipo_original',
-                'cruzamento_origem',
                 'genealogia_display',
             )
         }),
@@ -95,6 +100,9 @@ class GenotipoAdmin(SimpleHistoryAdmin):
         genitor_feminino = request.GET.get('genitor_feminino')
         genitor_masculino = request.GET.get('genitor_masculino')
         cruzamento_origem = request.GET.get('cruzamento_origem')
+        codigo_pre_selecao = request.GET.get('codigo_pre_selecao')
+        codigo_selecao = request.GET.get('codigo_selecao')
+        ano_selecao = request.GET.get('ano_selecao')
 
         if tipo:
             initial['tipo'] = tipo
@@ -108,6 +116,13 @@ class GenotipoAdmin(SimpleHistoryAdmin):
             initial["genitor_masculino"] = genitor_masculino
         if cruzamento_origem:
             initial["cruzamento_origem"] = cruzamento_origem
+        if codigo_pre_selecao:
+            initial["codigo_pre_selecao"] = codigo_pre_selecao
+        if codigo_selecao:
+            initial['codigo_selecao'] = codigo_selecao
+        if ano_selecao:
+            initial['ano_selecao'] = ano_selecao
+        
         return initial
 
     def genealogia_display(self, obj):
@@ -124,16 +139,16 @@ class GenotipoAdmin(SimpleHistoryAdmin):
         result = ''
         
         if nivel == 0:
-            result += f'<strong>{genotipo.identificador_unico} - {genotipo.nome_designacao}</strong><br>'
+            result += f'<strong>{genotipo.nome_designacao}</strong><br>'
         
         if genotipo.genitor_feminino or genotipo.genitor_masculino:
             if genotipo.genitor_feminino:
-                result += f'{indent}├─ ♀ <a href="/admin/macieira/genotipo/{genotipo.genitor_feminino.id}/change/">{genotipo.genitor_feminino.identificador_unico} - {genotipo.genitor_feminino.nome_designacao}</a><br>'
+                result += f'{indent}├─ ♀ <a href="/admin/macieira/genotipo/{genotipo.genitor_feminino.id}/change/">{genotipo.genitor_feminino.nome_designacao}</a><br>'
             else:
                 result += f'{indent}├─ ♀ ?<br>'
             
             if genotipo.genitor_masculino:
-                result += f'{indent}└─ ♂ <a href="/admin/macieira/genotipo/{genotipo.genitor_masculino.id}/change/">{genotipo.genitor_masculino.identificador_unico} - {genotipo.genitor_masculino.nome_designacao}</a><br>'
+                result += f'{indent}└─ ♂ <a href="/admin/macieira/genotipo/{genotipo.genitor_masculino.id}/change/">{genotipo.genitor_masculino.nome_designacao}</a><br>'
             else:
                 result += f'{indent}└─ ♂ (Polinização Livre)<br>'
             

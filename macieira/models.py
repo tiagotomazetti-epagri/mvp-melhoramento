@@ -143,7 +143,7 @@ class Genotipo(models.Model):
             else:
                 numero = 1
             
-            self.identificador_unico = f"M-{ano}-{numero:05d}"
+            self.identificador_unico = f"M-{ano}-{numero:04d}"
         
         # 2. Lógica para Mutantes
         if self.tipo == "MUTANTE" and self.genotipo_original:
